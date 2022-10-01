@@ -1,9 +1,3 @@
-import gmplot
-
-with open('MapsAPIKey.txt') as file:
-    api_key = file.readline()
-    file.close()
-
 # Example of embedding CEF Python browser using Tkinter toolkit.
 # This example has two widgets: a navigation bar and a browser.
 #
@@ -23,12 +17,19 @@ with open('MapsAPIKey.txt') as file:
 from cefpython3 import cefpython as cef
 import ctypes
 
-
 import tkinter.simpledialog
 import sys
 import os
 import platform
 import logging as _logging
+import gmplot
+import win32gui
+import win32ui
+import win32con
+
+with open('MapsAPIKey.txt') as file:
+    api_key = file.readline()
+    file.close()
 
 # Fix for PyCharm hints warnings
 WindowUtils = cef.WindowUtils()
@@ -46,6 +47,28 @@ logger = _logging.getLogger("tkinter_.py")
 IMAGE_EXT = ".png" if tkinter.TkVersion > 8.5 else ".gif"
 
 
+def TakeScreenshot(windowname):
+    w = 1920  # set this
+    h = 1080  # set this
+    bmpfilenamename = "out.bmp"  # set this
+
+    hwnd = win32gui.FindWindow(None, 'Map Example')
+    wDC = win32gui.GetWindowDC(hwnd)
+    dcObj = win32ui.CreateDCFromHandle(wDC)
+    cDC = dcObj.CreateCompatibleDC()
+    dataBitMap = win32ui.CreateBitmap()
+    dataBitMap.CreateCompatibleBitmap(dcObj, w, h)
+    cDC.SelectObject(dataBitMap)
+    cDC.BitBlt((0, 0), (w, h), dcObj, (0, 0), win32con.SRCCOPY)
+    dataBitMap.SaveBitmapFile(cDC, bmpfilenamename)
+
+    # Free Resources
+    dcObj.DeleteDC()
+    cDC.DeleteDC()
+    win32gui.ReleaseDC(hwnd, wDC)
+    win32gui.DeleteObject(dataBitMap.GetHandle())
+
+
 class MainFrame(tkinter.Frame):
 
     def __init__(self, root):
@@ -53,7 +76,7 @@ class MainFrame(tkinter.Frame):
         self.navigation_bar = None
 
         # Root
-        root.geometry("900x640")
+        root.geometry("1920x1080")
         tkinter.Grid.rowconfigure(root, 0, weight=1)
         tkinter.Grid.columnconfigure(root, 0, weight=1)
 
@@ -222,8 +245,9 @@ class LoadHandler(object):
         self.browser_frame = browser_frame
 
     def OnLoadStart(self, browser, **_):
-        if self.browser_frame.master.navigation_bar:
-            self.browser_frame.master.navigation_bar.set_url(browser.GetUrl())
+        test = 1
+        #if self.browser_frame.master.navigation_bar:
+            #self.browser_frame.master.navigation_bar.set_url(browser.GetUrl())
 
 
 class FocusHandler(object):
@@ -279,19 +303,8 @@ class NavigationBar(tkinter.Frame):
         if os.path.exists(reload_png):
             self.reload_image = tkinter.PhotoImage(file=reload_png)
         self.reload_button = tkinter.Button(self, image=self.reload_image,
-                                       command=self.reload)
+                                       command=self.on_button3)
         self.reload_button.grid(row=0, column=2)
-
-        # Url entry
-        self.url_entry = tkinter.Entry(self)
-        self.url_entry.bind("<FocusIn>", self.on_url_focus_in)
-        self.url_entry.bind("<FocusOut>", self.on_url_focus_out)
-        self.url_entry.bind("<Return>", self.on_load_url)
-        self.url_entry.bind("<Button-1>", self.on_button1)
-        self.url_entry.grid(row=0, column=3,
-                            sticky=(tkinter.N + tkinter.S + tkinter.E + tkinter.W))
-        tkinter.Grid.rowconfigure(self, 0, weight=100)
-        tkinter.Grid.columnconfigure(self, 3, weight=100)
 
         # Update state of buttons
         self.update_state()
@@ -308,10 +321,6 @@ class NavigationBar(tkinter.Frame):
         if self.master.get_browser():
             self.master.get_browser().Reload()
 
-    def set_url(self, url):
-        self.url_entry.delete(0, tkinter.END)
-        self.url_entry.insert(0, url)
-
     def on_url_focus_in(self, _):
         logger.debug("NavigationBar.on_url_focus_in")
 
@@ -327,6 +336,11 @@ class NavigationBar(tkinter.Frame):
         """Fix CEF focus issues (#255). See also FocusHandler.OnGotFocus."""
         logger.debug("NavigationBar.on_button1")
         self.master.master.focus_force()
+
+    def on_button3(self):
+        test = self.master.browser_frame.browser.allowedClientCallbacks
+        TakeScreenshot(self.widgetName)
+
 
     def update_state(self):
         browser = self.master.get_browser()
@@ -372,8 +386,14 @@ if __name__ == '__main__':
     sys.excepthook = cef.ExceptHook  # To shutdown all CEF processes on error
 
     root = tkinter.Tk()
+
+    pathlat = 38.209852675168314, 38.209794865507746, 38.20963296639867, 38.20797132999889, 38.207909145630744
+    pathlon = -84.55806318740112, -84.5568792916732, -84.55442383125227, -84.55462578588273, -84.55358331513037
+
     location = tkinter.simpledialog.askstring('TITLE', 'Enter location')
     gmap = gmplot.GoogleMapPlotter.from_geocode(location, apikey=api_key, zoom=17)
+    gmap.enable_marker_dropping('orange', draggable=True)
+    gmap.plot(pathlat, pathlon, 'cornflowerblue', edge_width=10)
     gmap.draw("map.html")
 
     app = MainFrame(root)
