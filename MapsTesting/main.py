@@ -18,6 +18,7 @@ from cefpython3 import cefpython as cef
 import ctypes
 
 import tkinter.simpledialog
+from tkinter import Toplevel
 import sys
 import os
 import platform
@@ -26,6 +27,10 @@ import gmplot
 import win32gui
 import win32ui
 import win32con
+
+import DrawingWindow
+
+root = tkinter.Tk()
 
 with open('MapsAPIKey.txt') as file:
     api_key = file.readline()
@@ -48,9 +53,9 @@ IMAGE_EXT = ".png" if tkinter.TkVersion > 8.5 else ".gif"
 
 
 def TakeScreenshot(windowname):
-    w = 1920  # set this
-    h = 1080  # set this
-    bmpfilenamename = "out.bmp"  # set this
+    w = 1920
+    h = 1080
+    bmpfilenamename = "out.gif"  # this needs to be a .gif file for the next step of the code to function
 
     hwnd = win32gui.FindWindow(None, 'Map Example')
     wDC = win32gui.GetWindowDC(hwnd)
@@ -59,7 +64,7 @@ def TakeScreenshot(windowname):
     dataBitMap = win32ui.CreateBitmap()
     dataBitMap.CreateCompatibleBitmap(dcObj, w, h)
     cDC.SelectObject(dataBitMap)
-    cDC.BitBlt((0, 0), (w, h), dcObj, (0, 0), win32con.SRCCOPY)
+    cDC.BitBlt((-10, -60), (w, h), dcObj, (0, 0), win32con.SRCCOPY)
     dataBitMap.SaveBitmapFile(cDC, bmpfilenamename)
 
     # Free Resources
@@ -67,6 +72,9 @@ def TakeScreenshot(windowname):
     cDC.DeleteDC()
     win32gui.ReleaseDC(hwnd, wDC)
     win32gui.DeleteObject(dataBitMap.GetHandle())
+
+    newWindow = tkinter.Toplevel(root)
+    DrawingWindow.OpenScreenshot(newWindow)
 
 
 class MainFrame(tkinter.Frame):
@@ -384,8 +392,6 @@ if __name__ == '__main__':
     logger.info("Tk {ver}".format(ver=tkinter.Tcl().eval('info patchlevel')))
     assert cef.__version__ >= "55.3", "CEF Python v55.3+ required to run this"
     sys.excepthook = cef.ExceptHook  # To shutdown all CEF processes on error
-
-    root = tkinter.Tk()
 
     pathlat = 38.209852675168314, 38.209794865507746, 38.20963296639867, 38.20797132999889, 38.207909145630744
     pathlon = -84.55806318740112, -84.5568792916732, -84.55442383125227, -84.55462578588273, -84.55358331513037
