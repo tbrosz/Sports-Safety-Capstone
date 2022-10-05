@@ -2,11 +2,7 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-"""
-    This class sends mails programmically. This requires
-    generation of application password from gmail account security
-    for remote login to mail servers.
-"""
+
 class MailEngine:
     def __init__(self):
         self.__sender = ""
