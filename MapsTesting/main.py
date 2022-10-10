@@ -19,6 +19,7 @@ import ctypes
 
 import tkinter.simpledialog
 from tkinter import Toplevel
+from PIL import ImageGrab
 import sys
 import os
 import platform
@@ -52,29 +53,19 @@ logger = _logging.getLogger("tkinter_.py")
 IMAGE_EXT = ".png" if tkinter.TkVersion > 8.5 else ".gif"
 
 
-def TakeScreenshot(windowname):
+def TakeScreenshot(widget):
     w = 1920
     h = 1080
-    bmpfilenamename = "out.gif"  # this needs to be a .gif file for the next step of the code to function
+    out_file_name = "out.gif"  # this needs to be a .gif file for the next step of the code to function
 
-    hwnd = win32gui.FindWindow(None, 'Map Example')
-    wDC = win32gui.GetWindowDC(hwnd)
-    dcObj = win32ui.CreateDCFromHandle(wDC)
-    cDC = dcObj.CreateCompatibleDC()
-    dataBitMap = win32ui.CreateBitmap()
-    dataBitMap.CreateCompatibleBitmap(dcObj, w, h)
-    cDC.SelectObject(dataBitMap)
-    cDC.BitBlt((-10, -60), (w, h), dcObj, (0, 0), win32con.SRCCOPY)
-    dataBitMap.SaveBitmapFile(cDC, bmpfilenamename)
-
-    # Free Resources
-    dcObj.DeleteDC()
-    cDC.DeleteDC()
-    win32gui.ReleaseDC(hwnd, wDC)
-    win32gui.DeleteObject(dataBitMap.GetHandle())
+    x = root.winfo_rootx() + widget.winfo_x()
+    y = root.winfo_rooty() + widget.winfo_y()
+    x1 = x + widget.winfo_width()
+    y1 = y + widget.winfo_height()
+    ImageGrab.grab().crop((x + 10, y + 30, x1, y1)).save("out.gif")
 
     newWindow = tkinter.Toplevel(root)
-    DrawingWindow.OpenScreenshot(newWindow)
+    DrawingWindow.OpenScreenshot(newWindow, root)
 
 
 class MainFrame(tkinter.Frame):
@@ -347,7 +338,7 @@ class NavigationBar(tkinter.Frame):
 
     def on_button3(self):
         test = self.master.browser_frame.browser.allowedClientCallbacks
-        TakeScreenshot(self.widgetName)
+        TakeScreenshot(self.master)
 
 
     def update_state(self):
