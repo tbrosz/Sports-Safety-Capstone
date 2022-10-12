@@ -1,15 +1,28 @@
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
 
-
+"""
+    This class sends mails programmically. This requires
+    generation of application password from gmail account security
+    for remote login to mail servers.
+"""
 class MailEngine:
-    def __init__(self):
+    def __init__(self, filename):
         self.__sender = ""
         self.__password = "pjcrbldsqrjzeuzz"
         self.__port = 465
         self.__subject = "This is a test email"
         self.__message = "This is a sample message"
+        self.__attachement = None
+
+        file = open(filename, "r")
+        data = file.read().splitlines()
+        self.__password = data[1] #second line is the password
+        self.__sender = data[0] #first line is the email address
+        file.close()
 
     #Setup credentials for the account from which
     # mail has to be sent
@@ -28,16 +41,38 @@ class MailEngine:
     #Set message to send
     def setMessage(self, message):
         self.__message = message
+
+    def setAttachement(self, filename):
+        self.__attachement = filename
     
-    #send a simple plain text email to the recipient
-    def send(self, recipient):
+    #send a simple plain text email to the recepient
+    def send(self, receipent):
                 
         message = MIMEMultipart("alternative")
         message["Subject"] = self.__subject
         message["From"] = self.__sender
-        message["To"] = recipient
+        message["To"] = receipent
 
         textMail = MIMEText(self.__message, "plain")
+
+        if self.__attachement != None:
+            # Open PDF file in binary mode
+            with open(self.__attachement, "rb") as attachment:
+                part = MIMEBase("application", "octet-stream")
+                part.set_payload(attachment.read())
+
+            # Encode file in ASCII characters to send by email    
+            encoders.encode_base64(part)
+
+            # Add header as key/value pair to attachment part
+            part.add_header(
+                "Content-Disposition",
+                f"attachment; filename= {self.__attachement}",
+            )
+
+            # Add attachment to message and convert message to string
+            message.attach(part)
+
         message.attach(textMail)
 
         # Create secure connection with server and send email
@@ -45,5 +80,5 @@ class MailEngine:
         with smtplib.SMTP_SSL("smtp.gmail.com", self.__port, context=connection) as server:
             server.login(self.__sender, self.__password)
             server.sendmail(
-                self.__sender, recipient, message.as_string()
+                self.__sender, receipent, message.as_string()
             )
