@@ -1,0 +1,98 @@
+
+[2022-09-26 21:21:31] Traceback (most recent call last):
+  File "C:\Users\spenc\PycharmProjects\MapsTesting\main.py", line 252, in <module>
+    app = MainFrame(root)
+  File "C:\Users\spenc\PycharmProjects\MapsTesting\main.py", line 75, in __init__
+    self.browser_frame.grid(row=1, column=0,
+AttributeError: 'NoneType' object has no attribute 'grid'
+
+
+[2022-09-26 21:32:56] Traceback (most recent call last):
+  File "C:\Users\spenc\PycharmProjects\MapsTesting\main.py", line 376, in <module>
+    location = tk.tkSimpleDialog("TITLE", "Enter location")
+AttributeError: module 'tkinter' has no attribute 'tkSimpleDialog'
+
+
+[2022-09-26 21:37:08] Traceback (most recent call last):
+  File "C:\Users\spenc\PycharmProjects\MapsTesting\main.py", line 374, in <module>
+    location = tkinter.simpledialog.askstring('TITLE', 'Enter location')
+  File "D:\Python\lib\tkinter\simpledialog.py", line 399, in askstring
+    d = _QueryString(title, prompt, **kw)
+  File "D:\Python\lib\tkinter\simpledialog.py", line 376, in __init__
+    _QueryDialog.__init__(self, *args, **kw)
+  File "D:\Python\lib\tkinter\simpledialog.py", line 271, in __init__
+    Dialog.__init__(self, parent, title)
+  File "D:\Python\lib\tkinter\simpledialog.py", line 137, in __init__
+    if parent.winfo_viewable():
+AttributeError: 'NoneType' object has no attribute 'winfo_viewable'
+
+
+[2022-09-27 20:57:37] Traceback (most recent call last):
+  File "C:\Users\spenc\PycharmProjects\MapsTesting\main.py", line 383, in <module>
+    app.mainloop()
+  File "D:\Python\lib\tkinter\__init__.py", line 1421, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt
+
+
+[2022-09-27 20:57:46] Traceback (most recent call last):
+  File "load_handler.pyx", line 40, in cefpython_py39.LoadHandler_OnLoadStart
+  File "C:\Users\spenc\PycharmProjects\MapsTesting\main.py", line 226, in OnLoadStart
+    self.browser_frame.master.navigation_bar.set_url(browser.GetUrl())
+  File "C:\Users\spenc\PycharmProjects\MapsTesting\main.py", line 312, in set_url
+    self.url_entry.delete(0, tkinter.END)
+AttributeError: 'NavigationBar' object has no attribute 'url_entry'
+
+
+[2022-09-27 20:58:53] Traceback (most recent call last):
+  File "load_handler.pyx", line 40, in cefpython_py39.LoadHandler_OnLoadStart
+  File "C:/Users/spenc/PycharmProjects/MapsTesting/main.py", line 226, in OnLoadStart
+    self.browser_frame.master.navigation_bar.set_url(browser.GetUrl())
+AttributeError: 'NavigationBar' object has no attribute 'set_url'
+
+
+[2022-10-04 19:39:11] Traceback (most recent call last):
+  File "C:\Users\spenc\PycharmProjects\MapsTesting\main.py", line 409, in <module>
+    app.mainloop()
+  File "D:\Python\lib\tkinter\__init__.py", line 1421, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt
+
+
+[2022-10-09 15:22:43] Traceback (most recent call last):
+  File "C:\Users\spenc\PycharmProjects\MapsTesting\main.py", line 400, in <module>
+    gmap = gmplot.GoogleMapPlotter.from_geocode(location, apikey=api_key, zoom=17)
+  File "C:\Users\spenc\PycharmProjects\MapsTesting\venv\lib\site-packages\gmplot\gmplot.py", line 444, in from_geocode
+    lat, lng = cls.geocode(location, apikey=apikey)
+  File "C:\Users\spenc\PycharmProjects\MapsTesting\venv\lib\site-packages\gmplot\gmplot.py", line 485, in geocode
+    latlng_dict = geocode['results'][0]['geometry']['location']
+IndexError: list index out of range
+
+
+[2022-10-10 16:29:46] Traceback (most recent call last):
+  File "C:\Users\spenc\PycharmProjects\MapsTesting\main.py", line 400, in <module>
+    app.mainloop()
+  File "D:\Python\lib\tkinter\__init__.py", line 1421, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt
+
+
+[2022-11-02 00:09:56] Traceback (most recent call last):
+  File "C:\Users\spenc\PycharmProjects\MapsTesting\main.py", line 371, in <module>
+    gmap = gmplot.GoogleMapPlotter.from_geocode(location, apikey=api_key, zoom=17)
+  File "C:\Users\spenc\PycharmProjects\MapsTesting\venv\lib\site-packages\gmplot\gmplot.py", line 444, in from_geocode
+    lat, lng = cls.geocode(location, apikey=apikey)
+  File "C:\Users\spenc\PycharmProjects\MapsTesting\venv\lib\site-packages\gmplot\gmplot.py", line 485, in geocode
+    latlng_dict = geocode['results'][0]['geometry']['location']
+IndexError: list index out of range
+
+
+[2022-11-02 00:10:07] Traceback (most recent call last):
+  File "C:\Users\spenc\PycharmProjects\MapsTesting\main.py", line 371, in <module>
+    gmap = gmplot.GoogleMapPlotter.from_geocode(location, apikey=api_key, zoom=17)
+  File "C:\Users\spenc\PycharmProjects\MapsTesting\venv\lib\site-packages\gmplot\gmplot.py", line 444, in from_geocode
+    lat, lng = cls.geocode(location, apikey=apikey)
+  File "C:\Users\spenc\PycharmProjects\MapsTesting\venv\lib\site-packages\gmplot\gmplot.py", line 485, in geocode
+    latlng_dict = geocode['results'][0]['geometry']['location']
+IndexError: list index out of range
+
