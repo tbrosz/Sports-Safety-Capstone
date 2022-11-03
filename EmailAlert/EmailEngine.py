@@ -20,8 +20,8 @@ class MailEngine:
 
         file = open(filename, "r")
         data = file.read().splitlines()
-        self.__password = data[1] #second line is the password
-        self.__sender = data[0] #first line is the email address
+        self.__password = data[1] 
+        self.__sender = data[0] 
         file.close()
 
     #Setup credentials for the account from which
@@ -56,21 +56,17 @@ class MailEngine:
         textMail = MIMEText(self.__message, "plain")
 
         if self.__attachement != None:
-            # Open PDF file in binary mode
             with open(self.__attachement, "rb") as attachment:
                 part = MIMEBase("application", "octet-stream")
                 part.set_payload(attachment.read())
 
-            # Encode file in ASCII characters to send by email    
             encoders.encode_base64(part)
 
-            # Add header as key/value pair to attachment part
             part.add_header(
                 "Content-Disposition",
                 f"attachment; filename= {self.__attachement}",
             )
 
-            # Add attachment to message and convert message to string
             message.attach(part)
 
         message.attach(textMail)
