@@ -12,7 +12,7 @@ from email import encoders
 class MailEngine:
     def __init__(self, filename):
         self.__sender = ""
-        self.__password = "pjcrbldsqrjzeuzz"
+        self.__password = ""
         self.__port = 465
         self.__subject = "This is a test email"
         self.__message = "This is a sample message"
