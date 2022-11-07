@@ -1,6 +1,9 @@
 from cefpython3 import cefpython as cef
 import ctypes
-
+import tkinter
+from tkinter import filedialog, Canvas
+from tkinter import *
+from PIL import Image as PIL_Image, ImageTk as PIL_ImageTk, ImageGrab
 import tkinter.simpledialog
 from tkinter import Toplevel
 from PIL import ImageGrab
@@ -10,13 +13,9 @@ import platform
 import logging as _logging
 import gmplot
 
-import DrawingWindow
-
 root = tkinter.Tk()
 
-with open('MapsAPIKey.txt') as file:
-    api_key = file.readline()
-    file.close()
+api_key = 'AIzaSyAMsGA5NZR2ASXt30TgJh8Vz65GZIa3AXc'
 
 # Fix for PyCharm hints warnings
 WindowUtils = cef.WindowUtils()
@@ -33,6 +32,70 @@ logger = _logging.getLogger("tkinter_.py")
 # Tk 8.5 doesn't support png images
 IMAGE_EXT = ".png" if tkinter.TkVersion > 8.5 else ".gif"
 
+prevClick = None
+canvas = None
+currentCanvas = None
+newRoot = None
+
+def TestFunction(event):
+    global prevClick
+    global currentCanvas
+    global currLabel
+
+    if prevClick is None:
+        prevClick = [event.x, event.y]
+        return
+
+    currentCanvas.create_line(prevClick[0], prevClick[1], event.x, event.y, width=3, fill='red')
+    currentCanvas.pack()
+    prevClick = [event.x, event.y]
+
+
+def AskFileDialog(event):
+    global canvas
+    filename = filedialog.asksaveasfilename()
+    canvas.focus_force()
+
+    OutputMap(filename)
+
+
+def OutputMap(filename):
+    global currentCanvas
+    global newRoot
+    global canvas
+
+    x = canvas.winfo_rootx() + canvas.winfo_x()
+    y = canvas.winfo_rooty() + canvas.winfo_y()
+    x1 = x + canvas.winfo_width()
+    y1 = y + canvas.winfo_height()
+
+    ImageGrab.grab().crop((x, y, x1, y1)).save(filename)
+    canvas.destroy()
+
+
+class DrawingWindow:
+    
+    currLabel = None
+
+    def OpenScreenshot(newWindow, passedRoot):
+        global currentCanvas
+        global currLabel
+        global root
+        global canvas
+        imageFile = 'C:\\Users\\spenc\\OneDrive\\Documents\\GitHub\\Sports-Safety-Capstone\\MapsTesting\\out.gif'
+        root = passedRoot
+
+        canvas = Canvas(newWindow, width=1910, height=1020)
+        canvas.focus_force()
+        currentCanvas = canvas
+
+        background_image = PIL_ImageTk.PhotoImage(file=imageFile)
+        canvas.pack(fill=tkinter.BOTH, expand=1)
+        canvas.create_image(0, 0, anchor=tkinter.NW, image=background_image)
+        canvas.background_image = background_image
+        canvas.bind("<Shift-Button-1>", TestFunction)
+        canvas.bind("<Shift-Button-3>", AskFileDialog)
+
 
 def TakeScreenshot(widget):
     w = 1920
@@ -43,7 +106,7 @@ def TakeScreenshot(widget):
     y = root.winfo_rooty() + widget.winfo_y()
     x1 = x + widget.winfo_width()
     y1 = y + widget.winfo_height()
-    ImageGrab.grab().crop((x + 10, y + 30, x1, y1)).save("out.gif")
+    ImageGrab.grab().crop((x + 10, y + 30, x1, y1)).save("C:\\Users\\spenc\\OneDrive\\Documents\\GitHub\\Sports-Safety-Capstone\\MapsTesting\\out.gif")
 
     newWindow = tkinter.Toplevel(root)
     DrawingWindow.OpenScreenshot(newWindow, root)
@@ -147,7 +210,7 @@ class BrowserFrame(tkinter.Frame):
         window_info = cef.WindowInfo()
         rect = [0, 0, self.winfo_width(), self.winfo_height()]
         window_info.SetAsChild(self.get_window_handle(), rect)
-        self.browser = cef.CreateBrowserSync(window_info, url=os.path.abspath("map.html"))
+        self.browser = cef.CreateBrowserSync(window_info, url=os.path.abspath("C:\\Users\\spenc\\OneDrive\\Documents\\GitHub\\Sports-Safety-Capstone\\MapsTesting\\map.html"))
         assert self.browser
         self.browser.SetClientHandler(LoadHandler(self))
         self.browser.SetClientHandler(FocusHandler(self))
@@ -351,36 +414,35 @@ class NavigationBar(tkinter.Frame):
         self.after(100, self.update_state)
 
 
-if __name__ == '__main__':
-    location = tkinter.simpledialog.askstring('TITLE', 'Enter location')
-    print("TEST")
 
+location = tkinter.simpledialog.askstring('TITLE', 'Enter location')
     
-    logger.setLevel(_logging.INFO)
-    stream_handler = _logging.StreamHandler()
-    formatter = _logging.Formatter("[%(filename)s] %(message)s")
-    stream_handler.setFormatter(formatter)
-    logger.addHandler(stream_handler)
-    logger.info("CEF Python {ver}".format(ver=cef.__version__))
-    logger.info("Python {ver} {arch}".format(
-        ver=platform.python_version(), arch=platform.architecture()[0]))
-    logger.info("Tk {ver}".format(ver=tkinter.Tcl().eval('info patchlevel')))
-    assert cef.__version__ >= "55.3", "CEF Python v55.3+ required to run this"
-    sys.excepthook = cef.ExceptHook  # To shutdown all CEF processes on error
+logger.setLevel(_logging.INFO)
+stream_handler = _logging.StreamHandler()
+formatter = _logging.Formatter("[%(filename)s] %(message)s")
+stream_handler.setFormatter(formatter)
+logger.addHandler(stream_handler)
+logger.info("CEF Python {ver}".format(ver=cef.__version__))
+logger.info("Python {ver} {arch}".format(
+    ver=platform.python_version(), arch=platform.architecture()[0]))
+logger.info("Tk {ver}".format(ver=tkinter.Tcl().eval('info patchlevel')))
+assert cef.__version__ >= "55.3", "CEF Python v55.3+ required to run this"
+sys.excepthook = cef.ExceptHook  # To shutdown all CEF processes on error
 
-    pathlat = 38.209852675168314, 38.209794865507746, 38.20963296639867, 38.20797132999889, 38.207909145630744
-    pathlon = -84.55806318740112, -84.5568792916732, -84.55442383125227, -84.55462578588273, -84.55358331513037
-    gmap = gmplot.GoogleMapPlotter.from_geocode(location, apikey=api_key, zoom=17)
-    # gmap = gmplot.GoogleMapPlotter.from_geocode("Georgetown, KY", apikey=api_key, zoom=17)
-    gmap.enable_marker_dropping('orange', draggable=True)
-    gmap.plot(pathlat, pathlon, 'cornflowerblue', edge_width=10)
-    gmap.draw("map.html")
+gmap = gmplot.GoogleMapPlotter.from_geocode(location, apikey=api_key, zoom=17)
+# gmap = gmplot.GoogleMapPlotter.from_geocode("Georgetown, KY", apikey=api_key, zoom=17)
+gmap.enable_marker_dropping('orange', draggable=True)
 
-    app = MainFrame(root)
-    # Tk must be initialized before CEF otherwise fatal error (Issue #306)
-    cef.Initialize()
+pathlat = 38.209852675168314, 38.209794865507746, 38.20963296639867, 38.20797132999889, 38.207909145630744
+pathlon = -84.55806318740112, -84.5568792916732, -84.55442383125227, -84.55462578588273, -84.55358331513037
+#gmap.plot(pathlat, pathlon, 'cornflowerblue', edge_width=10)
+gmap.draw("C:\\Users\\spenc\\OneDrive\\Documents\\GitHub\\Sports-Safety-Capstone\\MapsTesting\\map.html") 
 
-    app.mainloop()
-    cef.Shutdown()
+app = MainFrame(root)
+# Tk must be initialized before CEF otherwise fatal error (Issue #306)
+cef.Initialize()
+
+app.mainloop()
+cef.Shutdown()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
