@@ -1,0 +1,110 @@
+
+[2022-11-07 00:59:39] Traceback (most recent call last):
+  File "C:\Users\spenc\OneDrive\Documents\GitHub\Sports-Safety-Capstone\MapsTesting\main.py", line 371, in <module>
+    gmap = gmplot.GoogleMapPlotter.from_geocode(location, apikey=api_key, zoom=17)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 444, in from_geocode
+    lat, lng = cls.geocode(location, apikey=apikey)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 485, in geocode
+    latlng_dict = geocode['results'][0]['geometry']['location']
+IndexError: list index out of range
+
+
+[2022-11-07 01:08:24] Traceback (most recent call last):
+  File "C:\Users\spenc\OneDrive\Documents\GitHub\Sports-Safety-Capstone\MapsTesting\main.py", line 371, in <module>
+    gmap = gmplot.GoogleMapPlotter.from_geocode(location, apikey=api_key, zoom=17)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 444, in from_geocode
+    lat, lng = cls.geocode(location, apikey=apikey)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 485, in geocode
+    latlng_dict = geocode['results'][0]['geometry']['location']
+IndexError: list index out of range
+
+
+[2022-11-07 01:14:56] Traceback (most recent call last):
+  File "C:\Users\spenc\OneDrive\Documents\GitHub\Sports-Safety-Capstone\MapsTesting\main.py", line 371, in <module>
+    gmap = gmplot.GoogleMapPlotter.from_geocode(location, apikey=api_key, zoom=17)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 444, in from_geocode
+    lat, lng = cls.geocode(location, apikey=apikey)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 485, in geocode
+    latlng_dict = geocode['results'][0]['geometry']['location']
+IndexError: list index out of range
+
+
+[2022-11-07 01:19:16] Traceback (most recent call last):
+  File "C:\Users\spenc\OneDrive\Documents\GitHub\Sports-Safety-Capstone\MapsTesting\main.py", line 371, in <module>
+    gmap = gmplot.GoogleMapPlotter.from_geocode(location, apikey=api_key, zoom=17)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 444, in from_geocode
+    lat, lng = cls.geocode(location, apikey=apikey)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 485, in geocode
+    latlng_dict = geocode['results'][0]['geometry']['location']
+IndexError: list index out of range
+
+
+[2022-11-07 01:20:28] Traceback (most recent call last):
+  File "C:\Users\spenc\OneDrive\Documents\GitHub\Sports-Safety-Capstone\MapsTesting\main.py", line 371, in <module>
+    gmap = gmplot.GoogleMapPlotter.from_geocode(location, apikey=api_key, zoom=17)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 444, in from_geocode
+    lat, lng = cls.geocode(location, apikey=apikey)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 485, in geocode
+    latlng_dict = geocode['results'][0]['geometry']['location']
+IndexError: list index out of range
+
+
+[2022-11-07 01:23:47] Traceback (most recent call last):
+  File "main.py", line 371, in <module>
+    gmap = gmplot.GoogleMapPlotter.from_geocode(location, apikey=api_key, zoom=17)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 444, in from_geocode
+    lat, lng = cls.geocode(location, apikey=apikey)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 485, in geocode
+    latlng_dict = geocode['results'][0]['geometry']['location']
+IndexError: list index out of range
+
+
+[2022-11-07 01:23:58] Traceback (most recent call last):
+  File "C:\Users\spenc\OneDrive\Documents\GitHub\Sports-Safety-Capstone\MapsTesting\main.py", line 371, in <module>
+    gmap = gmplot.GoogleMapPlotter.from_geocode(location, apikey=api_key, zoom=17)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 444, in from_geocode
+    lat, lng = cls.geocode(location, apikey=apikey)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 485, in geocode
+    latlng_dict = geocode['results'][0]['geometry']['location']
+IndexError: list index out of range
+
+
+[2022-11-07 01:27:33] Traceback (most recent call last):
+  File "C:\Users\spenc\OneDrive\Documents\GitHub\Sports-Safety-Capstone\MapsTesting\main.py", line 371, in <module>
+    gmap = gmplot.GoogleMapPlotter.from_geocode(location, apikey=api_key, zoom=17)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 444, in from_geocode
+    lat, lng = cls.geocode(location, apikey=apikey)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 485, in geocode
+    latlng_dict = geocode['results'][0]['geometry']['location']
+IndexError: list index out of range
+
+
+[2022-11-07 01:35:02] Traceback (most recent call last):
+  File "C:\Users\spenc\OneDrive\Documents\GitHub\Sports-Safety-Capstone\MapsTesting\main.py", line 374, in <module>
+    gmap = gmplot.GoogleMapPlotter.from_geocode(location, apikey=api_key, zoom=17)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 444, in from_geocode
+    lat, lng = cls.geocode(location, apikey=apikey)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 485, in geocode
+    latlng_dict = geocode['results'][0]['geometry']['location']
+IndexError: list index out of range
+
+
+[2022-11-07 01:54:07] Traceback (most recent call last):
+  File "C:\Users\spenc\OneDrive\Documents\GitHub\Sports-Safety-Capstone\MapsTesting\main.py", line 374, in <module>
+    gmap = gmplot.GoogleMapPlotter.from_geocode(location, apikey=api_key, zoom=17)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 444, in from_geocode
+    lat, lng = cls.geocode(location, apikey=apikey)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 485, in geocode
+    latlng_dict = geocode['results'][0]['geometry']['location']
+IndexError: list index out of range
+
+
+[2022-11-07 02:26:06] Traceback (most recent call last):
+  File "C:\Users\spenc\OneDrive\Documents\GitHub\Sports-Safety-Capstone\MapsTesting\main.py", line 373, in <module>
+    gmap = gmplot.GoogleMapPlotter.from_geocode(location, apikey=api_key, zoom=17)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 444, in from_geocode
+    lat, lng = cls.geocode(location, apikey=apikey)
+  File "C:\python37\lib\site-packages\gmplot\gmplot.py", line 485, in geocode
+    latlng_dict = geocode['results'][0]['geometry']['location']
+IndexError: list index out of range
+

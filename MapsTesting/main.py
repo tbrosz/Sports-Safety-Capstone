@@ -352,6 +352,10 @@ class NavigationBar(tkinter.Frame):
 
 
 if __name__ == '__main__':
+    location = tkinter.simpledialog.askstring('TITLE', 'Enter location')
+    print("TEST")
+
+    
     logger.setLevel(_logging.INFO)
     stream_handler = _logging.StreamHandler()
     formatter = _logging.Formatter("[%(filename)s] %(message)s")
@@ -366,9 +370,8 @@ if __name__ == '__main__':
 
     pathlat = 38.209852675168314, 38.209794865507746, 38.20963296639867, 38.20797132999889, 38.207909145630744
     pathlon = -84.55806318740112, -84.5568792916732, -84.55442383125227, -84.55462578588273, -84.55358331513037
-
-    location = tkinter.simpledialog.askstring('TITLE', 'Enter location')
     gmap = gmplot.GoogleMapPlotter.from_geocode(location, apikey=api_key, zoom=17)
+    # gmap = gmplot.GoogleMapPlotter.from_geocode("Georgetown, KY", apikey=api_key, zoom=17)
     gmap.enable_marker_dropping('orange', draggable=True)
     gmap.plot(pathlat, pathlon, 'cornflowerblue', edge_width=10)
     gmap.draw("map.html")
