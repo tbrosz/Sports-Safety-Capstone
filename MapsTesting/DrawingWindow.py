@@ -24,6 +24,13 @@ def TestFunction(event):
     prevClick = [event.x, event.y]
 
 
+def PlaceIcon(event):
+    key = event.char
+
+    if (key == 'h'):
+        print('h')
+
+
 def AskFileDialog(event):
     global canvas
     filename = filedialog.asksaveasfilename()
@@ -63,6 +70,7 @@ def OpenScreenshot(newWindow, passedRoot):
     canvas.create_image(0, 0, anchor=tkinter.NW, image=background_image)
     canvas.background_image = background_image
     canvas.bind("<Shift-Button-1>", TestFunction)
+    canvas.bind("<Key>", )
     canvas.bind("<Shift-Button-3>", AskFileDialog)
 
 

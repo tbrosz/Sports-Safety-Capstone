@@ -51,6 +51,23 @@ def TestFunction(event):
     prevClick = [event.x, event.y]
 
 
+def PlaceIcon(event):
+    global currentCanvas
+    
+    key = event.char
+
+    if key == 'h':
+        currentCanvas.create_line(event.x - 10, event.y - 10, event.x - 10, event.y + 10, width = 3, fill='green')
+        currentCanvas.create_line(event.x - 10, event.y + 10, event.x + 10, event.y + 10, width = 3, fill='green')
+        currentCanvas.create_line(event.x + 10, event.y + 10, event.x + 10, event.y - 10, width = 3, fill='green')
+        currentCanvas.create_line(event.x + 10, event.y - 10, event.x - 10, event.y - 10, width = 3, fill='green') 
+
+    if key == 'w':
+        currentCanvas.create_line(event.x, event.y + 10, event.x + 10, event.y, width = 3, fill='blue')
+        currentCanvas.create_line(event.x + 10, event.y, event.x, event.y - 10, width = 3, fill='blue')
+        currentCanvas.create_line(event.x, event.y - 10, event.x - 10, event.y, width = 3, fill='blue')
+        currentCanvas.create_line(event.x - 10, event.y, event.x, event.y + 10, width = 3, fill='blue')
+
 def AskFileDialog(event):
     global canvas
     filename = filedialog.asksaveasfilename()
@@ -95,6 +112,7 @@ class DrawingWindow:
         canvas.background_image = background_image
         canvas.bind("<Shift-Button-1>", TestFunction)
         canvas.bind("<Shift-Button-3>", AskFileDialog)
+        canvas.bind("<Key>", PlaceIcon)
 
 
 def TakeScreenshot(widget):
