@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Services;
@@ -14,21 +16,24 @@ namespace MiTasksWAA
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!utils.isAuthenticated())
+            //if (!utils.isAuthenticated())
+            //{
+            //    Response.Redirect("/Login.aspx");
+            // }
+
+            ProcessStartInfo start = new ProcessStartInfo();
+            // TODO: This will need to be changed to the location of wherever the bat file will be stored on the machine running the server
+            // It should be added into a settings file for easy changing.
+            start.FileName = @"C:\Users\spenc\OneDrive\Documents\GitHub\Sports-Safety-Capstone\MapsTesting\test.bat";
+            start.UseShellExecute = false;
+            start.RedirectStandardOutput = true;
+            start.RedirectStandardError = true;
+            using (Process process = Process.Start(start))
             {
-                Response.Redirect("/Login.aspx");
-            }
-            ListItem li = new ListItem();
-            li.Value = "0";
-            li.Text = "";
-            ddlevents.Items.Add(li);
-            DataSet eventsDs = utils.get_data("SELECT * FROM MapEvents", out int total);
-            foreach(DataRow dr in eventsDs.Tables[0].Rows)
-            {
-                ListItem li1 = new ListItem();
-                li1.Value = dr["mapeventid"].ToString();
-                li1.Text = dr["mapeventname"].ToString();
-                ddlevents.Items.Add(li1);
+                using (StreamReader reader = process.StandardOutput)
+                {
+                }
+                process.WaitForExit();
             }
         }
 

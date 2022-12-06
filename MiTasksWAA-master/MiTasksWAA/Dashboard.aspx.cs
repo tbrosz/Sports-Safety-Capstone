@@ -12,10 +12,10 @@ namespace MiTasksWAA
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!utils.isAuthenticated())
-            {
-                Response.Redirect("/Login.aspx");
-            }
+            //if (!utils.isAuthenticated())
+            //{
+            //    Response.Redirect("/Login.aspx");
+            //}
         }
     }
 }
